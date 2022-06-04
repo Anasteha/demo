@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Clock</title>
+      <script>
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+            window.onload = function() {
+                const hours_hand = document.querySelector('.hour');
+                const minute_hand = document.querySelector('.minute');
+                const seconds_hand = document.querySelector('.seconds');
+                let prev_hour =  new Date().getHours();
+             
+                function date(){
+                    const today = new Date();
+                    const second = today.getSeconds();
+                    const hour = today.getHours();
+                    const minute = today.getMinutes();
+
+                    const secondDeg = ((second / 60) * 360) + 360; 
+                    const minuteDeg = ((minute / 60) * 360); 
+                    const hourDeg = ((hour / 12 ) * 360 ); 
+
+                    hours_hand.style.transform = `rotate(${hourDeg}deg)`;
+                    minute_hand.style.transform = `rotate(${minuteDeg}deg)`;
+                    seconds_hand.style.transform = `rotate(${secondDeg}deg)`;
+
+                    if(hour!=prev_hour){ kukuha_run(hour); }
+                    prev_hour = hour;
+                    }
+                setInterval(date, 1000);
+            }
+
+            async function kukuha_run(n){
+                const kukuha = document.querySelector('.kukuha');
+                if(n>12){ n-=12; }
+                for(let i=0; i<n; i++){
+                    await sleep(500);
+                    kukuha.style.display = 'block';
+                    await sleep(500);
+                    kukuha.style.display = 'none';
+                }
+            }
+        </script>
+    </head>
+<style>
+  .clock_holder {
+    width: 500px;
+    height: 500px;
+  }
+  .clock_main{
+    width: 500px;
+    height: 500px;
+    background: #8B008B;
+    border-radius: 250px;
+    box-shadow: inset 0 0 10px #212121, inset 0 0 2px #000000;
+  }
+  
+  .hand{
+      background-color: #212121;
+      transform-origin: bottom center;
+      border-radius: 4px;
+      position: absolute;
+      z-index: 10;
+  }
+  
+  .hour{
+      width: 10px;
+      left: 245px;
+      height: 150px;
+      top: 110px;
+       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  .seconds{
+      background: red;
+      width: 3px;
+      left: 250px;
+      height: 197px;
+      top: 63px;
+       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  .minute{
+      width: 5px;
+      left: 250px;
+      height: 200px;
+      top: 58px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  .center_point{
+      background: #212121;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      left: calc(250px - 10px);
+      top: 250px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      z-index: 20;
+  }
+  
+  .kukuha{
+    font: bold 24pt sans-serif;
+    position: absolute;
+    left: 210px;
+    top: 150px;
+    display: none;
+  }
+  
+  .hour1, .hour2, .hour3,
+  .hour4, .hour5, .hour6,
+  .hour7, .hour8, .hour9, 
+  .hour10, .hour11, .hour12{
+    color: #E6E6FA;
+    font: bold 12pt sans-serif;
+    position: absolute;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+  }
+  
+  .hour1{
+    left: 25px;
+    top: 250px;
+  }
+  .hour2 {
+    top: 150px;
+    left: 50px;
+  }
+  .hour3 {
+    top: 360px;
+    left: 50px;
+  }
+  .hour4 {
+    top: 360px;
+    left: 450px;
+  }
+  .hour5 {
+    top: 250px;
+    left: 475px;
+  }
+  .hour6 {
+    top: 150px;
+    left: 450px;
+  }
+  .hour7 {
+    top: 25px;
+    left: 250px;
+  }
+  .hour8 {
+    top: 475px;
+    left: 250px;
+  }
+  .hour9 {
+    top: 450px;
+    left: 135px;
+  }
+  .hour10 {
+    top: 450px;
+    left: 365px;
+  }
+  .hour11 {
+    top: 50px;
+    left: 365px;
+  }
+  .hour12 {
+    top: 50px;
+    left: 135px;
+  }
+</style>
+<body>
+      <div class="clock_holder ">
+            <div class="clock_main">
+              <div class="hour hand"></div>
+              <div class="minute hand"></div>
+              <div class="seconds hand"></div>
+              <div class="center_point"></div>
+              <div class="hour1">9</div>
+              <div class="hour2">10</div>
+              <div class="hour3">8</div>
+              <div class="hour4">4</div>
+              <div class="hour5">3</div>
+              <div class="hour6">2</div>
+              <div class="hour7">12</div>
+              <div class="hour8">6</div>
+              <div class="hour9">7</div>
+              <div class="hour10">5</div>
+              <div class="hour11">1</div>
+              <div class="hour12">11</div>
+              <div class="kukuha">KUKU</div>
+            </div>
+        </div>
+        <button onclick="kukuha_run(3)">КУКУШКА</button>
+   </body>
+</html>
